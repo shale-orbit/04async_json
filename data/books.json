@@ -5,7 +5,7 @@
   "category": "计算机技术",
   "author": "张承志",
   "rating": 5,
-  "borrowCount": 9,
+  "borrowCount":9,
   "month": "1月"
  },
  {
@@ -320,7 +320,7 @@
   "category": "历史哲学",
   "author": "周树人",
   "rating": 3,
-  "borrowCount": 91,
+  "borrpwCount":91,
   "month": "12月"
  }
 ]
