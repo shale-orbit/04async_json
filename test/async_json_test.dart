@@ -18,4 +18,20 @@ void main() {
     expect(book.category, '计算机技术');
     expect(book.borrowCount, 9);
   });
+
+  test('fromJson -> toJson -> fromJson 往返一致', () {
+  final original = {
+    'id': 'b02',
+    'title': '异步的秩序',
+    'category': '科普百科',
+    'author': '张承志',
+    'rating': 4,
+    'borrowCount': 66,
+    'month': '1月',
+  };
+  final book = Book.fromJson(original);
+  final restored = Book.fromJson(book.toJson());
+
+  expect(book.toJson(), restored.toJson());
+});
 }

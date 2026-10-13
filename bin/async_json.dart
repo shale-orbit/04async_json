@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:async_json/async_json.dart';
+import 'package:path/path.dart' as p;
 Future<void> main() async {
   try {
-    final text = await File('data/books.json').readAsString();
+    final text = await File(p.join('data','books.json')).readAsString();
     final books = [for (final j in jsonDecode(text) as List) Book.fromJson(j)];
     final byCat = <String, int>{};
     for (final b in books) {
@@ -15,7 +16,10 @@ Future<void> main() async {
     print('借阅量Top3 ${[for (final b in top3.take(3)) '${b.title}(${b.borrowCount})']}');
   } on FileSystemException {
     print('数据文件缺失，请检查 data/books.json');
-  } catch (e) {
+  } 
+   on TypeError {
+  print('字段类型不符合模型要求，请检查 books.json');
+}  catch (e) {
     print('解析失败：$e');
   }
 }

@@ -15,5 +15,14 @@ class Book {
         borrowCount: (j['borrowCount'] as num?)?.toInt() ?? 0,
         month: j['month'] as String? ?? '',
       );
+  Map<String, dynamic> toJson() => {
+      'id': id,
+      'title': title,
+      'category': category,
+      'author': author,
+      'rating': rating,
+      'borrowCount': borrowCount,
+      'month': month,
+    };   
 }
 

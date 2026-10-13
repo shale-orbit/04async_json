@@ -21,9 +21,9 @@ async_json/
 ├── bin/
 │   └── async_json.dart      # 程序入口 main()：异步读取 JSON、Map 类目统计、借阅量 Top3、异常兜底
 ├── lib/
-│   └── async_json.dart      # Book 模型类与 Book.fromJson 工厂构造函数
+│   └── async_json.dart      # Book 模型类：fromJson 解析 + toJson 反向序列化
 ├── test/
-│   └── async_json_test.dart # Book.fromJson 字段解析单元测试
+│   └── async_json_test.dart # 字段解析 + roundtrip 往返一致性单元测试
 └── data/
     └── books.json           # 课程统一数据集本地副本（36 条图书记录）
 ```
@@ -37,6 +37,7 @@ async_json/
 - 提供方案设计思路（工厂构造函数解析 JSON 的模式、Map 计数统计与降序排序取 Top3 的写法）
 - 生成代码参考片段（main 主流程、test 用例模板）
 - 讲解知识点（async/await、级联运算符、try-catch 捕获顺序）
+- 提供自主实践方案（toJson 往返验证测试、on TypeError 异常分支、用 p.join 接入 path 包）
 
 ## 本人完成的工作
 
@@ -44,12 +45,13 @@ async_json/
 - 项目结构搭建（dart create async_json、dart pub add path、复制数据集到 data/ 目录）
 - 运行 `dart run`、`dart test`、`dart analyze` 验证代码正确性
 - 完成步骤三异常路径实验（临时改名数据文件验证友好报错；删除 borrowCount 字段观察 null 类型错误，并在 fromJson 中加入缺失字段默认 0 的处理）
+- 完成自主实践（三类异常可读提示验证、toJson 往返一致测试、pubspec 依赖规范检查）
 - 调试和修复问题
 - 上传代码仓库 github
 
 ## 验证方式
 
 - `dart run` 主程序输出正确：总数 36、六个类目各 6 本、借阅量 Top3 为万历十五年(91)、茶马古道(87)、渲染管线十二讲(87)
-- `dart test` 1 个用例通过：`All tests passed!`
+- `dart test` 2 个用例通过：`All tests passed!`（字段解析 + roundtrip 往返一致）
 - `dart analyze` 零警告零错误
-- 异常路径实验：books.json 临时改名后输出"数据文件缺失，请检查 data/books.json"而非崩溃堆栈；删除 borrowCount 字段触发 null 类型错误，加入 `?? 0` 默认处理后程序恢复正常运行
+- 异常路径实验：books.json 临时改名后输出"数据文件缺失，请检查 data/books.json"而非崩溃堆栈；删除 borrowCount 字段触发 null 类型错误，加入 `?? 0` 默认处理后恢复正常；类型错误（数字字段写成文字）由 `on TypeError` 分支给出中文提示；字段缺失由默认值兜底
